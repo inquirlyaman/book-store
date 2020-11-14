@@ -1,13 +1,17 @@
+
 import * as express from "express";
 import * as bodyParser from "body-parser";
-
+import { authRoute } from './routes/authRoute';
+import mongoose = require("mongoose");
 export class App {
   public app: express.Application;
-
+  public routePrv: authRoute = new authRoute();
+  public mongoUrl: string = "mongodb://localhost/bookDB";
   constructor() {
     this.app = express();
     this.config();
-    // this.mongoSetup();
+    this.mongoSetup();
+    this.routePrv.initRoutes(this.app);
   }
   private config(): void {
     this.app.use(bodyParser.json());
@@ -18,8 +22,8 @@ export class App {
       next();
     });
   }
-  // private mongoSetup(): void {
-  //   (<any>mongoose).Promise = global.Promise;
-  //   mongoose.connect(this.mongoUrl, { useNewUrlParser: true });
-  // }
+  private mongoSetup(): void {
+    (<any>mongoose).Promise = global.Promise;
+    mongoose.connect(this.mongoUrl, { useNewUrlParser: true });
+  }
 }
