@@ -4,5 +4,6 @@ const bookController = new BookController();
 export class BookRoute {
     public ManageBook(app) {
         app.route('addBook').post(bookController.addBooks);
+        app.route('books').get(bookController.getAllBooks);
     }
 }
