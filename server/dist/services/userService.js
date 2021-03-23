@@ -1,0 +1,109 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserService = void 0;
+const _ = __importStar(require("lodash"));
+const bcrypt = __importStar(require("bcryptjs"));
+const user_1 = require("../models/user");
+const utilService_1 = require("../share/utilService");
+const responseUtil = new utilService_1.ResponseUtil();
+class UserService {
+    addUser(req, res) {
+        if (_.isEmpty(req.body.email)) {
+            const data = {
+                error: 'Bad request',
+                errMsg: 'Please enter a valid email',
+                errorCode: 400
+            };
+            responseUtil.getErrorResponse(res, data);
+        }
+        else {
+            user_1.User.findOne({ email: req.body.email }, (err, user) => {
+                if (user) {
+                    const data = {
+                        error: err,
+                        errMsg: 'User already exits',
+                        errorCode: 409
+                    };
+                    responseUtil.getErrorResponse(res, data);
+                }
+                else {
+                    const user = new user_1.User({
+                        email: req.body.email,
+                        password: bcrypt.hashSync(req.body.password, 10)
+                    });
+                    user.save((err, user) => {
+                        if (err) {
+                            res.send(err);
+                        }
+                        const data = {
+                            title: 'User exits',
+                            sucessMsg: 'User created successfully',
+                            statusCode: 200
+                        };
+                        responseUtil.successResponse(res, data);
+                    });
+                }
+            });
+        }
+    }
+    getUser(req, res) {
+        user_1.User.findOne({ email: req.body.email }, (err, user) => {
+            if (err) {
+                return res.status(500).json({
+                    title: 'An error occurred',
+                    error: err
+                });
+            }
+            if (user) {
+                if (_.isEmpty(req.body.password)) {
+                    return res.status(400).json({
+                        title: 'Bad request ',
+                        error: { message: 'Please enter a valid password' }
+                    });
+                }
+                else {
+                    const isMatch = bcrypt.compareSync(req.body.password, user.password);
+                    if (isMatch) {
+                        return res.status(200).json({
+                            message: 'Successfully logged in',
+                            user: user
+                        });
+                    }
+                    else {
+                        return res.status(400).json({
+                            title: 'Bad request ',
+                            error: { message: 'Incorrect Password' }
+                        });
+                    }
+                }
+            }
+            else {
+                return res.status(401).json({
+                    title: 'Login failed',
+                    error: { message: 'Invalid login credentials' }
+                });
+            }
+        });
+    }
+}
+exports.UserService = UserService;
+//# sourceMappingURL=userService.js.map

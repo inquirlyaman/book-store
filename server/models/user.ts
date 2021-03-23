@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-export const userSchema = new Schema({
+const userSchema = new Schema({
     email: {
         type: String,
         required: true
@@ -14,3 +14,5 @@ export const userSchema = new Schema({
         default: Date.now()
     }
 })
+const User = mongoose.model('User', userSchema);
+export {User};

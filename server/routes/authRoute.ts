@@ -3,7 +3,7 @@ import { AuthController } from '../controllers/authController';
 const authController = new AuthController();
 export class authRoute {
     public initRoutes(app: any): void {
-        app.route('/sign-up').post(authController.signUp)
+        app.route('/signup').post(authController.signUp)
         app.route('/signin').post(authController.signIn)
     }
 }

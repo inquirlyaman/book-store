@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+.app-description{
+    background-color: #3FCABB;
+    text-align: center;
+}
+.bg-color {
+    background-color: #3FCABB;
+}
+.fnt-xs { font-size: 12px;}
+.fnt-sm { font-size: 12px;}
+.fnt-md { font-size: 16px;}
+.fnt-lg { font-size: 20px;}
+.no-outline {
+  outline: none !important;
+}
+.no-border {
+  border:none;
+}
+.no-shadow {
+  box-shadow: none !important;
+}
+
+.required-star {
+  color: #ff0000;
+  font-size: 12px;
+}

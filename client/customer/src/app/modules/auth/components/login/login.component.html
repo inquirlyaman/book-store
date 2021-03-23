@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="login-container">
+        <div class="login-content col-sm-4">
+          <div class="row">
+            <div class="col-sm-12 px-0">
+              <div class="app-description p-3 text-white">
+                <i class="fa fa-book text-white" aria-hidden="true"></i>
+               Bookstore
+              </div>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-sm-12">
+              <h5 class="text-center"> Sign in </h5>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-sm-12">
+              <h6 class="text-center"> Use your Bookstore Account </h6>
+            </div>
+          </div>
+          <form [formGroup] ="loginForm" class="p-3" (ngSubmit)="submit()">
+            <div class="form-group">
+              <p><b>Email <span class="required-star">*</span></b></p>
+              <input type="text" autocomplete="off"  formControlName="email"
+              class="form-control  my-1" id="email" placeholder="Enter your email"              onselectstart="return false"
+              onDrag="return false" onDrop="return false"  required/>
+              <div *ngIf="submitted && loginFrm.email.errors && loginFrm.email.errors.required"
+              class="text-danger mt-2 w-100">
+                <p class="h6 fnt-xs">
+                  Email is required
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <p><b>Password <span class="required-star">*</span></b></p>
+              <input type="text" autocomplete="off"  formControlName="password"
+              class="form-control  my-1" id="password" placeholder="Enter your password"              onselectstart="return false"
+              onDrag="return false" onDrop="return false"  required/>
+              <div *ngIf="submitted && loginFrm.password.errors && loginFrm.password.errors.required"
+              class="text-danger mt-2 w-100">
+                <p class="h6 fnt-xs">
+                  Password is required
+                </p>
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn text-white
+               bg-color w-100 no-outline no-border no-shadow">
+               LOGIN
+              </button>
+              <div class="signUpMsg mt-2"> Don't have an account? <span id="signup" class="registerLink" >Register here</span></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
