@@ -7,7 +7,7 @@
             <div class="col-sm-12 px-0">
               <div class="app-description p-3 text-white">
                 <i class="fa fa-book text-white" aria-hidden="true"></i>
-               Bookstore
+                Bookstore
               </div>
             </div>
           </div>
@@ -21,26 +21,32 @@
               <h6 class="text-center"> Use your Bookstore Account </h6>
             </div>
           </div>
-          <form [formGroup] ="loginForm" class="p-3" (ngSubmit)="submit()">
+          <form [formGroup]="loginForm" class="p-3" (ngSubmit)="submit()">
             <div class="form-group">
               <p><b>Email <span class="required-star">*</span></b></p>
-              <input type="text" autocomplete="off"  formControlName="email"
-              class="form-control  my-1" id="email" placeholder="Enter your email"              onselectstart="return false"
-              onDrag="return false" onDrop="return false"  required/>
+              <input type="text" autocomplete="off" formControlName="email" class="form-control  my-1" id="email"
+                placeholder="Enter your email" onselectstart="return false" onDrag="return false" onDrop="return false"
+                required />
               <div *ngIf="submitted && loginFrm.email.errors && loginFrm.email.errors.required"
-              class="text-danger mt-2 w-100">
+                class="text-danger mt-2 w-100">
                 <p class="h6 fnt-xs">
                   Email is required
+                </p>
+              </div>
+              <div *ngIf="submitted && loginFrm.email.errors && loginFrm.email.errors.email"
+                class="text-danger mt-2 w-100">
+                <p class="h6 fnt-xs">
+                  Email must be a valid email address
                 </p>
               </div>
             </div>
             <div class="form-group">
               <p><b>Password <span class="required-star">*</span></b></p>
-              <input type="text" autocomplete="off"  formControlName="password"
-              class="form-control  my-1" id="password" placeholder="Enter your password"              onselectstart="return false"
-              onDrag="return false" onDrop="return false"  required/>
+              <input type="text" autocomplete="off" formControlName="password" class="form-control  my-1" id="password"
+                placeholder="Enter your password" onselectstart="return false" onDrag="return false"
+                onDrop="return false" required />
               <div *ngIf="submitted && loginFrm.password.errors && loginFrm.password.errors.required"
-              class="text-danger mt-2 w-100">
+                class="text-danger mt-2 w-100">
                 <p class="h6 fnt-xs">
                   Password is required
                 </p>
@@ -49,9 +55,10 @@
             <div class="form-group">
               <button type="submit" class="btn text-white
                bg-color w-100 no-outline no-border no-shadow">
-               LOGIN
+                LOGIN
               </button>
-              <div class="signUpMsg mt-2"> Don't have an account? <span id="signup" class="registerLink" (click) ="navigateTo()" >Register here</span></div>
+              <div class="signUpMsg mt-2"> Don't have an account? <span id="signup" class="registerLink"
+                  (click)="navigateTo()">Register here</span></div>
             </div>
           </form>
         </div>

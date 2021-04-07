@@ -55,7 +55,7 @@ class UserService {
                             res.send(err);
                         }
                         const data = {
-                            title: 'User exits',
+                            title: 'User creattion',
                             sucessMsg: 'User created successfully',
                             statusCode: 200
                         };
@@ -68,39 +68,49 @@ class UserService {
     getUser(req, res) {
         user_1.User.findOne({ email: req.body.email }, (err, user) => {
             if (err) {
-                return res.status(500).json({
-                    title: 'An error occurred',
-                    error: err
-                });
+                const data = {
+                    error: 'An error occurred',
+                    errMsg: 'Internal server error',
+                    errorCode: 500
+                };
+                responseUtil.getErrorResponse(res, data);
             }
             if (user) {
                 if (_.isEmpty(req.body.password)) {
-                    return res.status(400).json({
-                        title: 'Bad request ',
-                        error: { message: 'Please enter a valid password' }
-                    });
+                    const data = {
+                        error: 'Bad request',
+                        errMsg: 'Please enter a valid password',
+                        errorCode: 400
+                    };
+                    responseUtil.getErrorResponse(res, data);
                 }
                 else {
                     const isMatch = bcrypt.compareSync(req.body.password, user.password);
                     if (isMatch) {
-                        return res.status(200).json({
-                            message: 'Successfully logged in',
-                            user: user
-                        });
+                        const data = {
+                            title: 'User login ',
+                            sucessMsg: 'Successfully logged in',
+                            statusCode: 200
+                        };
+                        responseUtil.successResponse(res, data);
                     }
                     else {
-                        return res.status(400).json({
-                            title: 'Bad request ',
-                            error: { message: 'Incorrect Password' }
-                        });
+                        const data = {
+                            error: 'Bad request',
+                            errMsg: 'Incorrect Password',
+                            errorCode: 400
+                        };
+                        responseUtil.getErrorResponse(res, data);
                     }
                 }
             }
             else {
-                return res.status(401).json({
-                    title: 'Login failed',
-                    error: { message: 'Invalid login credentials' }
-                });
+                const data = {
+                    error: 'Login failed',
+                    errMsg: 'Invalid login credentials',
+                    errorCode: 401
+                };
+                responseUtil.getErrorResponse(res, data);
             }
         });
     }

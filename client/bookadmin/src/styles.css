@@ -24,3 +24,18 @@
   color: #ff0000;
   font-size: 12px;
 }
+.navbar {
+  padding: .1rem 1rem;
+}
+body {
+  font-family: "Noto Sans", Arial, Helvetica;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  font-size: 0.75rem;
+  color: #000;
+  background-color: #ececec;
+  overflow-y: scroll;
+}

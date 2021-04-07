@@ -22,6 +22,7 @@ class App {
     config() {
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: false }));
+        this.app.use('/upload/images', express_1.default.static('upload/images'));
         this.app.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token");
