@@ -29,4 +29,10 @@ export const bookSchema = new Schema({
         type: String,
         required: true
     },
+    active: {
+        type: Boolean,
+        require: true
+    }
 })
+const Book = mongoose.model('book', bookSchema);
+export { Book };

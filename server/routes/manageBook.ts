@@ -7,9 +7,10 @@ export class BookRoute {
     public ManageBook(app) {
         const storage = multer.diskStorage({
             destination: (req, file, cb) => {
-                cb(null, 'upload/images');
+                cb(null, 'public');
             },
             filename: (req, file, cb) => {
+                console.log('call me ');
                 cb(null, `${file.fieldname}_ ${Date.now()}${path.extname(file.originalname)}`);
             }
         });
@@ -18,6 +19,7 @@ export class BookRoute {
                 cb(null, true)
             } else {
                 cb(null, false)
+                return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
             }
         }
         const upload = multer({
@@ -28,7 +30,8 @@ export class BookRoute {
             fileFilter: fileFilter
         });
 
-        app.route('/addBook').post(upload.single('cover'), bookController.addBooks);
-        app.route('/books').get(bookController.getAllBooks);
+        app.route('/add-book').post(upload.single('cover'), bookController.addBooks);
+        app.route('/getAllBooks').get(bookController.getAllBooks)
+        app.route('/deleteBook').post(bookController.deleteBookById);;
     }
 }

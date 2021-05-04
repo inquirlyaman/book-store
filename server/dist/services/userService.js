@@ -90,7 +90,8 @@ class UserService {
                         const data = {
                             title: 'User login ',
                             sucessMsg: 'Successfully logged in',
-                            statusCode: 200
+                            statusCode: 200,
+                            user: user
                         };
                         responseUtil.successResponse(res, data);
                     }

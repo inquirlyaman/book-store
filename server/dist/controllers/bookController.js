@@ -22,66 +22,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookController = void 0;
 const mongoose = __importStar(require("mongoose"));
 const book_1 = require("../models/book");
-const _ = __importStar(require("lodash"));
+const bookService_1 = require("../services/bookService");
 const Book = mongoose.model('Book', book_1.bookSchema);
+const bookService = new bookService_1.BookService();
 class BookController {
     constructor() {
         this.addBooks = (req, res, next) => {
-            console.log('>>', req.file);
-            const title = req.body.title && req.body.title.trim();
-            const author = req.body.author && req.body.author.trim();
-            const publisher = req.body.publisher && req.body.publisher.trim();
-            const price = req.body.price && req.body.price.trim();
-            const description = req.body.description && req.body.description.trim();
-            const category = req.body.category && req.body.category.trim();
-            const cover = req.file.path;
-            const book = new Book({
-                title: title,
-                description: description,
-                author: author,
-                publisher: publisher,
-                category: category,
-                cover: cover,
-                price: price
-            });
-            book.save((err, book) => {
-                if (err) {
-                    return res.status(500).json({
-                        title: 'An error occurred',
-                        error: err
-                    });
-                }
-                return res.status(200).json({
-                    message: 'Book added successfully',
-                    book: book
-                });
-            });
+            try {
+                const user = bookService.addBooks(req, res, next);
+            }
+            catch (error) {
+                console.log(error);
+            }
         };
         this.getAllBooks = (req, res, next) => {
-            const query = Book.find().select('title description price author cover');
-            query.exec((err, doc) => {
-                if (err) {
-                    return res.status(500).json({
-                        title: 'An error occurred',
-                        error: err
-                    });
-                }
-                const newBooks = [];
-                _.forEach(doc, (key, value) => {
-                    console.log(key);
-                    newBooks.push({
-                        title: key.title,
-                        price: key.price,
-                        description: key.description,
-                        cover: 'http://localhost:9000/' + key.cover,
-                        author: key.author
-                    });
-                });
-                return res.status(200).json({
-                    message: 'successfully',
-                    books: newBooks
-                });
-            });
+            try {
+                const user = bookService.getAllBooks(req, res, next);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        };
+        this.deleteBookById = (req, res, next) => {
+            try {
+                const user = bookService.deleteBookById(req, res, next);
+            }
+            catch (error) {
+                console.log(error);
+            }
         };
     }
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 import { AuthenticationService } from '../../services';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import * as _ from 'lodash-es';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -48,6 +49,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: this.loginForm.value.password
     };
     this.authService.signIn(reqPayload).pipe(takeUntil(this.unsubscribe)).subscribe((res: any) => {
+      this.authService.user.next(_.get(res, 'result.user'));
+      this.authService.putCookie('user', _.get(res, 'result.user'))
       this.router.navigate(['/dashboard/books']);
     }, err => {
       console.log(err);

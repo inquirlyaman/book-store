@@ -19,7 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bookSchema = void 0;
+exports.Book = exports.bookSchema = void 0;
 const mongoose = __importStar(require("mongoose"));
 const Schema = mongoose.Schema;
 exports.bookSchema = new Schema({
@@ -51,5 +51,11 @@ exports.bookSchema = new Schema({
         type: String,
         required: true
     },
+    active: {
+        type: Boolean,
+        require: true
+    }
 });
+const Book = mongoose.model('book', exports.bookSchema);
+exports.Book = Book;
 //# sourceMappingURL=book.js.map

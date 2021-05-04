@@ -1,0 +1,95 @@
+<div class="modal-header d-block bg-color text-white">
+
+  <h6 class="modal-title text-center " id="exampleModalLabel"> Add Book </h6>
+</div>
+<div class="modal-body">
+  <form [formGroup]="bookForm" class="p-3">
+    <div class="row">
+      <div class="col-sm-6 col-lg-6">
+        <div class="form-group">
+          <p><b>Title <span class="required-star">*</span></b></p>
+          <input type="text" autocomplete="off" formControlName="title" class="form-control  my-1" id="title"
+            placeholder="Enter Book title" onselectstart="return false" onDrag="return false" onDrop="return false"
+            required />
+          <div *ngIf="submitted && bookFrm.title.errors && bookFrm.title.errors.required"
+            class="text-danger mt-2 w-100">
+            <p class="h6 fnt-xs">
+              Title is required
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <p><b>Author <span class="required-star">*</span></b></p>
+          <input type="text" autocomplete="off" formControlName="author" class="form-control  my-1" id="title"
+            placeholder="Enter Book Author" onselectstart="return false" onDrag="return false" onDrop="return false"
+            required />
+          <div *ngIf="submitted && bookFrm.author.errors && bookFrm.author.errors.required"
+            class="text-danger mt-2 w-100">
+            <p class="h6 fnt-xs">
+              Author is required
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <p><b>Publisher <span class="required-star">*</span></b></p>
+          <input type="text" autocomplete="off" formControlName="publisher" class="form-control  my-1" id="title"
+            placeholder="Enter Book publisher" onselectstart="return false" onDrag="return false" onDrop="return false"
+            required />
+          <div *ngIf="submitted && bookFrm.publisher.errors && bookFrm.publisher.errors.required"
+            class="text-danger mt-2 w-100">
+            <p class="h6 fnt-xs">
+              Publisher is required
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-6">
+        <div class="form-group">
+          <p><b>Description <span class="required-star">*</span></b></p>
+          <input type="text" autocomplete="off" formControlName="description" class="form-control  my-1" id="title"
+            placeholder="Enter Book Description" onselectstart="return false" onDrag="return false"
+            onDrop="return false" required />
+          <div *ngIf="submitted && bookFrm.description.errors && bookFrm.description.errors.required"
+            class="text-danger mt-2 w-100">
+            <p class="h6 fnt-xs">
+              Description is required
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <p><b>Price <span class="required-star">*</span></b></p>
+          <input type="text" autocomplete="off" formControlName="price" class="form-control  my-1" id="title"
+            placeholder="Enter Book price" onselectstart="return false" onDrag="return false" onDrop="return false"
+            required />
+          <div *ngIf="submitted && bookFrm.price.errors && bookFrm.price.errors.required"
+            class="text-danger mt-2 w-100">
+            <p class="h6 fnt-xs">
+              Price is required
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <p><b>Category <span class="required-star">*</span></b></p>
+          <input type="text" autocomplete="off" formControlName="category" class="form-control  my-1" id="title"
+            placeholder="Enter Book category" onselectstart="return false" onDrag="return false" onDrop="return false"
+            required />
+          <div *ngIf="submitted && bookFrm.category.errors && bookFrm.category.errors.required"
+            class="text-danger mt-2 w-100">
+            <p class="h6 fnt-xs">
+              Category is required
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="file" (change)="uploadFile($event)">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn text-white
+  bg-color no-outline no-border no-shadow mr-auto" (click)="bsModalRef.hide()">Cancel</button>
+  <button type="button" (click)="submit()" class="btn text-white
+  bg-color no-outline no-border no-shadow ">Add Book</button>
+</div>

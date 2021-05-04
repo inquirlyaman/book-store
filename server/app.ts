@@ -20,7 +20,7 @@ export class App {
   private config(): void {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
-    this.app.use('/upload/images', express.static('upload/images'))
+    this.app.use('/public', express.static('public'))
     this.app.use((req, res, next) => {
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token");
@@ -30,6 +30,6 @@ export class App {
   }
   private mongoSetup(): void {
     (<any>mongoose).Promise = global.Promise;
-    mongoose.connect(this.mongoUrl, { useNewUrlParser: true });
+    mongoose.connect(this.mongoUrl, { useNewUrlParser: true }, { useUnifiedTopology: true });
   }
 }
