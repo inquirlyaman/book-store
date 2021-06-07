@@ -14,9 +14,12 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
@@ -24,6 +27,8 @@ const _ = __importStar(require("lodash"));
 const bcrypt = __importStar(require("bcryptjs"));
 const user_1 = require("../models/user");
 const utilService_1 = require("../share/utilService");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const env_1 = require("../env");
 const responseUtil = new utilService_1.ResponseUtil();
 class UserService {
     addUser(req, res) {
@@ -87,11 +92,16 @@ class UserService {
                 else {
                     const isMatch = bcrypt.compareSync(req.body.password, user.password);
                     if (isMatch) {
+                        const token = jsonwebtoken_1.default.sign({
+                            email: user.email,
+                            userId: user._id.toString(),
+                            roles: user.roles
+                        }, env_1.CONSTANTS.SECRET_KEY, { expiresIn: '1h' });
                         const data = {
                             title: 'User login ',
                             sucessMsg: 'Successfully logged in',
                             statusCode: 200,
-                            user: user
+                            token: token
                         };
                         responseUtil.successResponse(res, data);
                     }

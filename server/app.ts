@@ -3,21 +3,17 @@ import express, { Application } from "express";
 import * as bodyParser from "body-parser";
 import cors from 'cors';
 import { authRoute, authRouter } from './routes/authRoute';
-// import { BookRoute } from './routes/manageBook';
 import mongoose = require("mongoose");
 import { protectedApi } from "./routes/protectedApi";
 import { isAuth } from "./middlewares/isAuth";
 export class App {
   public app: Application;
   public publicRoutes: authRoute = new authRoute();
-  // public bookRoutePrv: BookRoute = new BookRoute();
   public mongoUrl: string = "mongodb://localhost/bookDB";
   constructor() {
     this.app = express();
     this.config();
     this.mongoSetup();
-    // this.publicRoutes.initRoutes(this.app);
-    // this.bookRoutePrv.ManageBook(this.app);
     this.app.use('/public', authRouter)
     this.app.use('/protected', isAuth, protectedApi)
   }

@@ -6,18 +6,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
 const express_1 = __importDefault(require("express"));
 const authRoute_1 = require("./routes/authRoute");
-const manageBook_1 = require("./routes/manageBook");
 const mongoose = require("mongoose");
+const protectedApi_1 = require("./routes/protectedApi");
+const isAuth_1 = require("./middlewares/isAuth");
 class App {
     constructor() {
-        this.routePrv = new authRoute_1.authRoute();
-        this.bookRoutePrv = new manageBook_1.BookRoute();
+        this.publicRoutes = new authRoute_1.authRoute();
         this.mongoUrl = "mongodb://localhost/bookDB";
         this.app = express_1.default();
         this.config();
         this.mongoSetup();
-        this.routePrv.initRoutes(this.app);
-        this.bookRoutePrv.ManageBook(this.app);
+        this.app.use('/public', authRoute_1.authRouter);
+        this.app.use('/protected', isAuth_1.isAuth, protectedApi_1.protectedApi);
     }
     config() {
         this.app.use(express_1.default.json());
@@ -25,9 +25,16 @@ class App {
         this.app.use('/public', express_1.default.static('public'));
         this.app.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token");
+            res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization");
             res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
             next();
+        });
+        this.app.use((error, req, res, next) => {
+            console.log(error);
+            const status = error.statusCode || 500;
+            const message = error.message;
+            const data = error.data;
+            res.status(status).json({ message: message, data: data });
         });
     }
     mongoSetup() {

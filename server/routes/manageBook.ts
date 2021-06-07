@@ -33,13 +33,8 @@ const upload = multer({
 export const manageBookRouter = express.Router()
 export class BookRoute {
     public ManageBook(app) {
-
-        // app.route('/add-book').post(upload.single('cover'), bookController.addBooks);
-        // app.route('/getAllBooks').get(bookController.getAllBooks)
-        // app.route('/deleteBook').post(bookController.deleteBookById);
-       
     }
 }
-manageBookRouter.post('/add-book', isAdmin,  upload.single('cover'), bookController.addBooks)
-manageBookRouter.get('/getAllBooks', isCustomer,  bookController.getAllBooks)
-manageBookRouter.post('/deleteBook',isAdmin, bookController.deleteBookById)
+manageBookRouter.post('/add-book', isAdmin, upload.single('cover'), bookController.addBooks)
+manageBookRouter.get('/getAllBooks', isCustomer, bookController.getAllBooks)
+manageBookRouter.post('/deleteBook', isAdmin, bookController.deleteBookById)

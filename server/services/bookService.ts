@@ -1,10 +1,10 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, Request, Response } from 'express';
 import { ResponseUtil } from '../share/utilService';
 import { Book } from '../models/book';
 import * as _ from 'lodash';
 const responseUtil = new ResponseUtil();
 export class BookService {
-    addBooks: RequestHandler = (req?: any, res?: any, next?: any) => {
+    addBooks: RequestHandler = (req?: Request, res?: Response, next?: any) => {
         const url = req.protocol + '://' + req.get('host')
         const formdata: any = _.pick(req.body, ['title', 'author', 'publisher', 'price', 'description', 'category',
             'price']);
