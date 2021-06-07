@@ -3,6 +3,8 @@ import * as bcrypt from 'bcryptjs';
 import { Request as req, Response as res } from "express";
 import { User } from '../models/user';
 import { ResponseUtil } from '../share/utilService';
+import  jwt  from 'jsonwebtoken';
+import { CONSTANTS } from '../env';
 const responseUtil = new ResponseUtil();
 export class UserService {
     addUser(req: req, res: res) {
@@ -64,11 +66,20 @@ export class UserService {
                 } else {
                     const isMatch = bcrypt.compareSync(req.body.password, user.password);
                     if (isMatch) {
+                        const token = jwt.sign(
+                            {
+                              email: user.email,
+                              userId: user._id.toString(),
+                              roles: user.roles
+                            },
+                            CONSTANTS.SECRET_KEY,
+                            { expiresIn: '1h' }
+                          );
                         const data = {
                             title: 'User login ',
                             sucessMsg: 'Successfully logged in',
                             statusCode: 200,
-                            user: user
+                            token: token
                         }
                         responseUtil.successResponse(res, data);
                     } else {
